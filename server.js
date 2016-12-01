@@ -15,9 +15,9 @@ app.use(express.static(__dirname + '/public'));
 
 // our database is an array for now with some hardcoded values
 var todos = [
-  // { _id: 1, task: 'Laundry', description: 'Wash clothes' },
-  // { _id: 2, task: 'Grocery Shopping', description: 'Buy dinner for this week' },
-  // { _id: 3, task: 'Homework', description: 'Make this app super awesome!' }
+  { _id: 1, task: 'Laundry', description: 'Wash clothes' },
+  { _id: 2, task: 'Grocery Shopping', description: 'Buy dinner for this week' },
+  { _id: 3, task: 'Homework', description: 'Make this app super awesome!' }
 ];
 
 /**********
@@ -50,17 +50,24 @@ app.get('/api/todos/search', function search(req, res) {
 });
 
 app.get('/api/todos', function index(req, res) {
+  res.json({todos: todos});
   /* This endpoint responds with all of the todos
    */
 });
 
 app.post('/api/todos', function create(req, res) {
+  todos.push(req.json);
+
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
 });
 
 app.get('/api/todos/:id', function show(req, res) {
+
+
+  res.json({todos: "_id"});
+
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
@@ -74,6 +81,11 @@ app.put('/api/todos/:id', function update(req, res) {
 });
 
 app.delete('/api/todos/:id', function destroy(req, res) {
+  var id = req.params.id;
+   todos.parentElement.removeChild({_id: id}); //function(error, res){
+  //   if(error) console.log("there was an error")
+  //     res.json({_id: id});
+  });
   /* This endpoint will delete a single todo with the
    * id specified in the route parameter (:id) and respond
    * with deleted todo.
