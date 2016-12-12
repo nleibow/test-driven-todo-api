@@ -56,7 +56,13 @@ app.get('/api/todos', function index(req, res) {
 });
 
 app.post('/api/todos', function create(req, res) {
-  todos.push(req.json);
+  var things = req.body.task;
+  var whatIs = req.body.description;
+  var id = todos.length;
+  todos.push({"_id": id, "task": things, "description": whatIs});
+
+  console.log(id, whatIs, things);
+  res.json(todos[id]);
 
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
@@ -64,14 +70,19 @@ app.post('/api/todos', function create(req, res) {
 });
 
 app.get('/api/todos/:id', function show(req, res) {
+for (var i= 0; i < todos.length - 1; i++) {
+  var cur = JSON.stringify(todos[i]._id);
+  if (cur == req.params.id){
+    res.json(todos[i]);
+  }
+  
 
-
-  res.json({todos: "_id"});
+  
 
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
-});
+}});
 
 app.put('/api/todos/:id', function update(req, res) {
   /* This endpoint will update a single todo with the
@@ -80,16 +91,16 @@ app.put('/api/todos/:id', function update(req, res) {
    */
 });
 
-app.delete('/api/todos/:id', function destroy(req, res) {
-  var id = req.params.id;
-   todos.parentElement.removeChild({_id: id}); //function(error, res){
-  //   if(error) console.log("there was an error")
-  //     res.json({_id: id});
-  });
-  /* This endpoint will delete a single todo with the
-   * id specified in the route parameter (:id) and respond
-   * with deleted todo.
-   */
+// app.delete('/api/todos/:id', function destroy(req, res) {
+//   var id = req.params.id;
+//    todos.parentElement.removeChild({_id: id}); //function(error, res){
+//   //   if(error) console.log("there was an error")
+//   //     res.json({_id: id});
+//   });
+//   /* This endpoint will delete a single todo with the
+//    * id specified in the route parameter (:id) and respond
+//    * with deleted todo.
+//    */
 
 
 /**********
